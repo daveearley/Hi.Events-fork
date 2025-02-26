@@ -31,7 +31,7 @@ environments:
     cache: hievents-redis-prod
     database: hievents-db-staging
     queue:
-      - hievents-queue-staging
+      - hievents-queue-prod
       - hievents-webhook-queue-staging
     queue-memory: 1024
     queue-concurrency: 2
