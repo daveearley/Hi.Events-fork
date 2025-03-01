@@ -221,3 +221,4 @@ Visit `http://localhost:5678` to view the frontend.
 
 4. **Frontend not connecting to the backend:**  
    Ensure the API URLs are set correctly in both the frontend `.env` file and the backend `.env` file. Also, verify that environment variables are properly exported in the terminal.
+
