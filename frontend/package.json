@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "dev:csr": "vite --port 5678 --host 0.0.0.0",
     "build:csr": "vite build",
