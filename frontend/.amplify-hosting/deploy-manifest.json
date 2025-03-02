@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "routes": [
+    {
+      "path": "/*.*",
+      "target": {
+        "kind": "Static"
+      },
+      "fallback": {
+        "kind": "Compute",
+        "src": "default"
+      }
+    },
+    {
+      "path": "/*",
+      "target": {
+        "kind": "Compute",
+        "src": "default"
+      }
+    }
+  ],
+  "computeResources": [
+    {
+      "name": "default",
+      "entrypoint": "server.mjs",
+      "runtime": "nodejs20.x"
+    }
+  ],
+  "framework": {
+    "name": "custom",
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,45 @@
+version: 1
+applications:
+  - appRoot: frontend
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - npm install
+        build:
+          commands:
+            - npm run build  # Build using Vite & Lingui
+            # Prepare Amplify Hosting SSR structure
+            - mkdir -p .amplify-hosting/static .amplify-hosting/compute/default
+            - cp -r dist/client/* .amplify-hosting/static
+            - cp -r dist/server/* .amplify-hosting/compute/default
+            - cp lambda.mjs .amplify-hosting/compute/default/server.mjs
+            - cp server.js .amplify-hosting/compute/default/server.js
+            # Copy package.json but REMOVE dev dependencies
+            - cp package.json package-lock.json .amplify-hosting/compute/default/
+            - cd .amplify-hosting/compute/default && npm install
+            - rm -rf node_modules/.cache
+            - rm -rf node_modules/@tabler/icons
+      artifacts:
+        baseDirectory: .amplify-hosting
+        files:
+          - "**/*"
+      cache:
+        paths:
+          - node_modules/**/*
+    backend:
+      phases:
+        build:
+          commands:
+            - echo "✅ No backend detected, skipping backend build"
+    deploy:
+      phases:
+        preDeploy:
+          commands:
+            - echo "🚀 Preparing for deployment"
+        deploy:
+          commands:
+            - echo "Starting SSR Server..."
+        postDeploy:
+          commands:
+            - echo "✅ Deployment completed successfully!"
