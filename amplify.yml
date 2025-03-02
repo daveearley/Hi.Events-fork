@@ -5,7 +5,7 @@ applications:
       phases:
         preBuild:
           commands:
-            - npm ci  # Install everything including Vite and Lingui
+            - npm install
         build:
           commands:
             - npm run build  # Build using Vite & Lingui
@@ -16,7 +16,7 @@ applications:
             - cp lambda.mjs .amplify-hosting/compute/default/server.mjs
             # Copy package.json but REMOVE dev dependencies
             - cp package.json package-lock.json .amplify-hosting/compute/default/
-            - cd .amplify-hosting/compute/default && npm ci --only=production  # Strip out devDeps
+            - cd .amplify-hosting/compute/default && npm install --omit=dev
       artifacts:
         baseDirectory: .amplify-hosting
         files:
