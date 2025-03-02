@@ -17,8 +17,6 @@ applications:
         paths:
           - node_modules/**/*
       renderMode: ssr # Add this line
-      buildPath: "dist" # Add this line
-      serverBuildPath: "../lambda.js" # Add this line
     customHeaders:
       - pattern: '**/*'
         headers:
@@ -28,7 +26,7 @@ applications:
       appBuild: true
     buildSpec:
       artifacts:
-        baseDirectory: frontend
+        baseDirectory: frontend/dist
         files:
           - '**/*'
       phases:
@@ -48,14 +46,3 @@ applications:
         build:
           commands:
             - echo "✅ Backend build is handled as part of frontend build"
-    deploy:
-      phases:
-        preDeploy:
-          commands:
-            - echo "🚀 Preparing for deployment"
-        deploy:
-          commands:
-            - npm run start:aws
-        postDeploy:
-          commands:
-            - echo "✅ Deployment completed successfully!"
