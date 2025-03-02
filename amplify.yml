@@ -24,7 +24,6 @@ applications:
         paths:
           - node_modules/**/*
       renderMode: ssr
-      buildPath: dist
       serverBuildPath: dist/lambda.js
     customHeaders:
       - pattern: '**/*'
