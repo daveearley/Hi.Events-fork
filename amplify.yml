@@ -13,7 +13,8 @@ applications:
             - mkdir -p .amplify-hosting/static .amplify-hosting/compute/default
             - cp -r dist/client/* .amplify-hosting/static
             - cp -r dist/server/* .amplify-hosting/compute/default
-            - cp lambda.mjs .amplify-hosting/compute/default/server.mjs  # Rename if needed
+            - cp -r node_modules .amplify-hosting/compute/default
+            - cp lambda.mjs .amplify-hosting/compute/default/server.mjs
       artifacts:
         baseDirectory: .amplify-hosting
         files:
