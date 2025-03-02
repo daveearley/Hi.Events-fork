@@ -9,6 +9,9 @@ applications:
         build:
           commands:
             - npm run build
+            - cp lambda.js dist/
+            - cp server.js dist/
+            - cp -r node_modules dist/
       artifacts:
         baseDirectory: dist/client
         files:
@@ -16,31 +19,14 @@ applications:
       cache:
         paths:
           - node_modules/**/*
-      renderMode: ssr # Add this line
+      renderMode: ssr
+      buildPath: dist
+      serverBuildPath: dist/lambda.js
     customHeaders:
       - pattern: '**/*'
         headers:
           - key: 'Cache-Control'
             value: 'public, max-age=0, must-revalidate'
-    build:
-      appBuild: true
-    buildSpec:
-      artifacts:
-        baseDirectory: frontend/dist
-        files:
-          - '**/*'
-      phases:
-        build:
-          commands:
-            - cd frontend
-            - npm install
-            - npm run build
-            - mkdir -p dist/client/.amplify-hosting
-            - cp -r node_modules dist/
-            - cp lambda.js dist/
-            - cp server.js dist/
-            - cp dist/client/index.html dist/client/.amplify-hosting/index.html || true
-            - echo '{"renderMode":"ssr","entryPoint":"../lambda.js"}' > dist/client/.amplify-hosting/amplify.json
     backend:
       phases:
         build:
