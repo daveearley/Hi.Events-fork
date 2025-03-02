@@ -18,16 +18,9 @@ applications:
           - node_modules/**/*
     backend:
       phases:
-        preBuild:
-          commands:
-            - npm install -g @aws-amplify/cli
-            - npm install
         build:
           commands:
-            - amplify push --yes
-        postBuild:
-          commands:
-            - echo "✅ Backend successfully deployed"
+            - echo "✅ No backend detected, skipping backend build"
     deploy:
       phases:
         preDeploy:
