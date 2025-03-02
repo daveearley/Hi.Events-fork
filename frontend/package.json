@@ -98,6 +98,6 @@
     "vite-plugin-copy": "^0.1.6"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.0.2"
+    "@rollup/rollup-linux-x64-gnu": "*"
   }
 }
