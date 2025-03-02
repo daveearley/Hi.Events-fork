@@ -12,6 +12,7 @@ applications:
             - cp lambda.js dist/
             - cp server.js dist/
             - cp -r node_modules dist/
+            - ls -la dist/
       artifacts:
         baseDirectory: dist/client
         files:
@@ -20,8 +21,8 @@ applications:
         paths:
           - node_modules/**/*
       renderMode: ssr
-      buildPath: dist
-      serverBuildPath: dist/lambda.js
+      buildPath: "./dist"
+      serverBuildPath: "./dist/lambda.js"
     customHeaders:
       - pattern: '**/*'
         headers:
