@@ -1,0 +1,8 @@
+{
+  "renderMode": "ssr",
+  "entryPoint": "lambda.js",
+  "buildDirectory": "dist",
+  "environment": {
+    "NODE_ENV": "production"
+  }
+}

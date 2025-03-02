@@ -10,17 +10,39 @@ applications:
           commands:
             - npm run build
       artifacts:
-        baseDirectory: dist/client
+        baseDirectory: dist
         files:
           - "**/*"
       cache:
         paths:
           - node_modules/**/*
+    customHeaders:
+      - pattern: '**/*'
+        headers:
+          - key: 'Cache-Control'
+            value: 'public, max-age=0, must-revalidate'
+    build:
+      appBuild: true
+    buildSpec:
+      artifacts:
+        baseDirectory: frontend
+        files:
+          - '**/*'
+      phases:
+        build:
+          commands:
+            - cd frontend
+            - npm install
+            - npm run build
+            - cp -r node_modules dist/
+            - cp lambda.js dist/
+            - cp server.js dist/
+            - cp index.html dist/ || true
     backend:
       phases:
         build:
           commands:
-            - echo "✅ No backend detected, skipping backend build"
+            - echo "✅ Backend build is handled as part of frontend build"
     deploy:
       phases:
         preDeploy:
