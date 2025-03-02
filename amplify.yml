@@ -14,6 +14,7 @@ applications:
             - cp -r dist/client/* .amplify-hosting/static
             - cp -r dist/server/* .amplify-hosting/compute/default
             - cp lambda.mjs .amplify-hosting/compute/default/server.mjs
+            - cp server.js .amplify-hosting/compute/default/server.js
             # Copy package.json but REMOVE dev dependencies
             - cp package.json package-lock.json .amplify-hosting/compute/default/
             - cd .amplify-hosting/compute/default && npm install --omit=dev
