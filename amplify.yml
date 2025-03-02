@@ -6,13 +6,16 @@ applications:
         preBuild:
           commands:
             - npm install
+            - echo "Current directory: $(pwd)"
         build:
           commands:
             - npm run build
             - cp lambda.js dist/
             - cp server.js dist/
             - cp -r node_modules dist/
-            - ls -la dist/
+            - echo "Directory structure after build:"
+            - ls -la
+            - ls -la dist/ || echo "dist directory not found"
       artifacts:
         baseDirectory: dist/client
         files:
@@ -21,8 +24,8 @@ applications:
         paths:
           - node_modules/**/*
       renderMode: ssr
-      buildPath: "./dist"
-      serverBuildPath: "./dist/lambda.js"
+      buildPath: dist
+      serverBuildPath: dist/lambda.js
     customHeaders:
       - pattern: '**/*'
         headers:
