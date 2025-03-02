@@ -20,3 +20,6 @@ backend:
       commands:
         - npm install -g @aws-amplify/cli
         - amplify push --yes
+  deploy:
+    commands:
+      - npm run start:aws
