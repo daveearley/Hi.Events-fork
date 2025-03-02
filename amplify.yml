@@ -6,16 +6,16 @@ applications:
         preBuild:
           commands:
             - npm install
-            - echo "Current directory: $(pwd)"
+            - "echo 'Current directory: $(pwd)'"
         build:
           commands:
             - npm run build
             - cp lambda.js dist/
             - cp server.js dist/
             - cp -r node_modules dist/
-            - echo "Directory structure after build:"
+            - "echo 'Directory structure after build:'"
             - ls -la
-            - ls -la dist/ || echo "dist directory not found"
+            - "ls -la dist/ || echo 'dist directory not found'"
       artifacts:
         baseDirectory: dist/client
         files:
@@ -35,4 +35,4 @@ applications:
       phases:
         build:
           commands:
-            - echo "✅ Backend build is handled as part of frontend build"
+            - "echo '✅ Backend build is handled as part of frontend build'"
