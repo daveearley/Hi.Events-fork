@@ -17,6 +17,8 @@ applications:
             # Copy package.json but REMOVE dev dependencies
             - cp package.json package-lock.json .amplify-hosting/compute/default/
             - cd .amplify-hosting/compute/default && npm install --omit=dev
+            - rm -rf node_modules/.cache
+            - rm -rf node_modules/@tabler/icons
       artifacts:
         baseDirectory: .amplify-hosting
         files:
