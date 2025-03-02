@@ -11,10 +11,9 @@
     }
   ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/server.js"
-    }
+    { "src": "^/assets/(.*)", "dest": "/dist/client/assets/$1" },
+    { "src": "^/(.+\\.[a-zA-Z0-9]+)$", "dest": "/dist/client/$1" },
+    { "src": "/(.*)", "dest": "/server.js" }
   ],
   "env": {
     "NODE_ENV": "production",
