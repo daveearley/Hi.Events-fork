@@ -1,5 +1,0 @@
-{
-  "renderMode": "ssr",
-  "buildPath": "dist",
-  "serverBuildPath": "lambda.js"
-}

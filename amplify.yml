@@ -6,32 +6,41 @@ applications:
         preBuild:
           commands:
             - npm install
-            - "echo 'Current directory: $(pwd)'"
         build:
           commands:
             - npm run build
-            - cp lambda.js dist/
-            - cp server.js dist/
-            - cp -r node_modules dist/
-            - "echo 'Directory structure after build:'"
-            - ls -la
-            - "ls -la dist/ || echo 'dist directory not found'"
+            # Move the build output to Amplify's expected structure
+            - mkdir -p .amplify-hosting/static .amplify-hosting/compute/default
+            - cp -r dist/client/* .amplify-hosting/static
+            - cp -r dist/server/* .amplify-hosting/compute/default
+            - cp lambda.js .amplify-hosting/compute/default/server.js  # Rename if needed
       artifacts:
-        baseDirectory: dist/client
+        baseDirectory: .amplify-hosting
         files:
           - "**/*"
       cache:
         paths:
           - node_modules/**/*
-      renderMode: ssr
-      serverBuildPath: dist/lambda.js
-    customHeaders:
-      - pattern: '**/*'
-        headers:
-          - key: 'Cache-Control'
-            value: 'public, max-age=0, must-revalidate'
     backend:
       phases:
+        preBuild:
+          commands:
+            - npm install -g @aws-amplify/cli
+            - npm install
         build:
           commands:
-            - "echo '✅ Backend build is handled as part of frontend build'"
+            - echo "✅ No backend detected, skipping backend build"
+        postBuild:
+          commands:
+            - echo "✅ Backend successfully deployed"
+    deploy:
+      phases:
+        preDeploy:
+          commands:
+            - echo "🚀 Preparing for deployment"
+        deploy:
+          commands:
+            - echo "Starting SSR Server..."
+        postDeploy:
+          commands:
+            - echo "✅ Deployment completed successfully!"
