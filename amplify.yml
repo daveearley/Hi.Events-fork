@@ -28,7 +28,7 @@ applications:
             - echo "🚀 Preparing for deployment"
         deploy:
           commands:
-            - if [ "$AWS_EXECUTION_ENV" ]; then npm run start:aws; else npm run start; fi
+            - npm run start:aws
         postDeploy:
           commands:
             - echo "✅ Deployment completed successfully!"
