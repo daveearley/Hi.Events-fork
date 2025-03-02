@@ -36,12 +36,29 @@ const resolvePath = (relativePath) => {
 // Read template and manifest files
 const getTemplateHtml = async () => {
     if (isProduction) {
-        try {
-            return await fs.readFile(resolvePath("./dist/client/index.html"), "utf-8");
-        } catch (err) {
-            // Fallback to direct path if the above fails
-            return await fs.readFile(resolvePath("./client/index.html"), "utf-8");
+        const possiblePaths = [
+            "./dist/client/index.html",
+            "./client/index.html",
+            "../dist/client/index.html",
+            "../client/index.html",
+            "../../dist/client/index.html",
+            "./index.html"
+        ];
+
+        // Try each path until we find a valid one
+        for (const templatePath of possiblePaths) {
+            try {
+                console.log(`Trying to read template from: ${resolvePath(templatePath)}`);
+                const template = await fs.readFile(resolvePath(templatePath), "utf-8");
+                console.log(`Successfully read template from: ${resolvePath(templatePath)}`);
+                return template;
+            } catch (err) {
+                console.log(`Could not read template from: ${resolvePath(templatePath)}`);
+            }
         }
+
+        console.warn("Could not find template HTML in any location");
+        return "<!DOCTYPE html><html><head></head><body><!--app-html--><!--dehydrated-state--><!--environment-variables--></body></html>";
     }
     return "";
 };
