@@ -1,25 +1,41 @@
 version: 1
-frontend:
-  phases:
-    preBuild:
-      commands:
-        - npm install
-    build:
-      commands:
-        - npm run build
-  artifacts:
-    baseDirectory: dist
-    files:
-      - "**/*"
-  cache:
-    paths:
-      - node_modules/**/*
-backend:
-  phases:
-    build:
-      commands:
-        - npm install -g @aws-amplify/cli
-        - amplify push --yes
-  deploy:
-    commands:
-      - npm run start:aws
+applications:
+  - appRoot: frontend  # Adjust this to match your actual frontend directory
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - cd frontend && npm install
+        build:
+          commands:
+            - cd frontend && npm run build
+      artifacts:
+        baseDirectory: frontend/dist
+        files:
+          - "**/*"
+      cache:
+        paths:
+          - frontend/node_modules/**/*
+    backend:
+      phases:
+        preBuild:
+          commands:
+            - cd frontend && npm install -g @aws-amplify/cli
+            - cd frontend && npm install
+        build:
+          commands:
+            - cd frontend && amplify push --yes
+        postBuild:
+          commands:
+            - echo "Backend successfully deployed"
+    deploy:
+      phases:
+        preDeploy:
+          commands:
+            - echo "Preparing for deployment"
+        deploy:
+          commands:
+            - cd frontend && if [ "$AWS_EXECUTION_ENV" ]; then npm run start:aws; else npm run start; fi
+        postDeploy:
+          commands:
+            - echo "Deployment completed successfully!"
