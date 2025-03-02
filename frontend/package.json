@@ -14,7 +14,7 @@
     "build:ssr:server": "vite build --ssr src/entry.server.tsx --outDir dist/server",
     "start": "cross-env NODE_ENV=production node server.js",
     "start:aws": "cross-env NODE_ENV=production node lambda.js",
-    "build": "npm run messages:extract && npm run messages:compile && npm run build:ssr:client && npm run build:ssr:server",
+    "build": "yarn run messages:extract && yarn run messages:compile && yarn run build:ssr:client && yarn run build:ssr:server",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "messages:extract": "lingui extract",
     "messages:compile": "lingui compile"
