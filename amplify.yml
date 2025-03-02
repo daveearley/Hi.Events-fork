@@ -5,16 +5,18 @@ applications:
       phases:
         preBuild:
           commands:
-            - npm install --production
+            - npm ci  # Install everything including Vite and Lingui
         build:
           commands:
-            - npm run build
-            # Move the build output to Amplify's expected structure
+            - npm run build  # Build using Vite & Lingui
+            # Prepare Amplify Hosting SSR structure
             - mkdir -p .amplify-hosting/static .amplify-hosting/compute/default
             - cp -r dist/client/* .amplify-hosting/static
             - cp -r dist/server/* .amplify-hosting/compute/default
-            - cp package.json .amplify-hosting/compute/default/
             - cp lambda.mjs .amplify-hosting/compute/default/server.mjs
+            # Copy package.json but REMOVE dev dependencies
+            - cp package.json package-lock.json .amplify-hosting/compute/default/
+            - cd .amplify-hosting/compute/default && npm ci --only=production  # Strip out devDeps
       artifacts:
         baseDirectory: .amplify-hosting
         files:
@@ -24,16 +26,9 @@ applications:
           - node_modules/**/*
     backend:
       phases:
-        preBuild:
-          commands:
-            - npm install -g @aws-amplify/cli
-            - npm install
         build:
           commands:
             - echo "✅ No backend detected, skipping backend build"
-        postBuild:
-          commands:
-            - echo "✅ Backend successfully deployed"
     deploy:
       phases:
         preDeploy:
