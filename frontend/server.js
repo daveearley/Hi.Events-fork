@@ -117,13 +117,18 @@ app.use("*", async (req, res) => {
     }
 });
 
-app.listen(port, () => {
-    console.info(`SSR Serving at http://localhost:${port}`);
-});
+if (process.env.AWS_EXECUTION_ENV) {
+    console.info("Running in AWS Lambda mode");
+} else {
+    app.listen(port, () => {
+        console.info(`SSR Serving at http://localhost:${port}`);
+    });
+}
+
+export { app };
 
 const dynamicImport = async (path) => {
     return import(
         nodePath.isAbsolute(path) ? nodeUrl.pathToFileURL(path).toString() : path
     );
-        
 }
