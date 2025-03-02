@@ -16,6 +16,9 @@ applications:
       cache:
         paths:
           - node_modules/**/*
+      renderMode: ssr # Add this line
+      buildPath: "dist" # Add this line
+      serverBuildPath: "../lambda.js" # Add this line
     customHeaders:
       - pattern: '**/*'
         headers:
